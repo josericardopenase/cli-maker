@@ -17,6 +17,7 @@ def main():
     router = Router([
             Route(
                 path="project",
+                help_text="Project utils",
                 children=[
                     Route(
                         path="start",

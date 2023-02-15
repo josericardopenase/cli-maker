@@ -15,6 +15,7 @@ class Route:
     path : str 
     children : Optional[List[Route]] = None
     command : Optional[Command] = None
+    help_text : Optional[str] = ""
 
     def __iter__(self):
         return self.children.__iter__()
