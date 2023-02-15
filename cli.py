@@ -1,21 +1,19 @@
 from utils.classes import get_subtypes
+from dataclasses import dataclass
 from commands import Command
+from router import Router
+from sys import argv
 
 class CLI():
-    def __init__(self):
-        self.commands = get_subtypes(Command)
+    def __init__(self, router : Router):
+        self.router = router
 
-    def run(self, argv):
-        for x in self.commands:
-            command = x()
-            if(command.name == argv[1]):
-                command.run(argv[2:])
-                return 0
-        self.help()
-        return 1
-
-    def help(self):
-        print("This is the help of CLI")
-        for x in self.commands:
-            print(x().help_text)
-
+    def run(self):
+        current_route = self.router
+        for index in range(1, len(argv)):
+            for child in current_route:
+                if child.path == argv[index]:
+                    if child.is_leave:
+                        child.command.run(argv[index+1:])
+                    else:
+                        current_route = child

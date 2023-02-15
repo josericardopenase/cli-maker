@@ -1,6 +1,5 @@
 from fields import BaseField
 from typing import List
-from dataclasses import dataclass
 from abc import ABC
 
 class Command(ABC):
@@ -19,7 +18,7 @@ class Command(ABC):
         if(self.validate(args)):
             self.command(args)
 
-    def command(self):
+    def command(self, args):
         pass
 
     @property
