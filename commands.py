@@ -1,10 +1,12 @@
 from fields import BaseField
-from typing import List
-from abc import ABC
+from typing import List, Optional,Callable
+from dataclasses import dataclass
 
-class Command(ABC):
+class Command:
     name : str
-    fields: List[BaseField] = []
+    description: Optional[str] = ""
+    fields: List[BaseField]
+    command : Optional[Callable] = None
 
     def validate(self, args):
         if(len(args) != len(self.fields)):
@@ -20,7 +22,8 @@ class Command(ABC):
             self.command(args)
 
     def command(self, args):
-        pass
+        if(self.command):
+            self.command(args)
 
     @property
     def help_text(self):

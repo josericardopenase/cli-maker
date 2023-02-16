@@ -28,6 +28,7 @@ class NumberField(BaseField):
     minn: int = -math.inf
 
     def is_valid(self, value, throw_exception=True):
+        value = int(value)
         if(value > self.maxn):
             print("{} argument greater than max".format(self.name))
             return False

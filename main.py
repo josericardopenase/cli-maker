@@ -1,7 +1,8 @@
 from cli import CLI
 from commands import Command
 from router import Router, Route
-from fields import StringField
+import decorators as dc
+from fields import StringField, NumberField
 from ui.colors import RGB, tint_text, Tint
 from ui.components import Text
 
@@ -17,25 +18,35 @@ class StartProject(Command):
         txt.show()
 
 
-class ListProject(Command):
-    name = "project"
-    description = "Create, List, Delete projects"
 
-    def command(self, args):
-        print(tint_text("List projects", color=Tint.FAIL))
+@dc.command(name="delete", description="Delete new adam project")
+@dc.field(StringField(name="Project name", error_message="Not valid first arg", max_length=5))
+@dc.field(StringField(name="Project description", error_message="Not valid second arg", max_length=5))
+@dc.field(NumberField(name="number", error_message="not valid number"))
+def DeleteProject(args):
+    txt=Text("delete project", color=Tint.OKBLUE)
+    txt.show()
+
+@dc.command(name="project", description="create, destroy, list projects")
+def ListProject(args):
+    print(tint_text("List projects", color=Tint.FAIL))
 
 def main():
     router = Router([
             Route(
                 path="project",
                 help_text="Project utils",
-                command=ListProject(),
+                command=ListProject,
                 children=[
-                    Route(
-                        path="start",
-                        command=StartProject()
-                    )
-                ],
+                        Route(
+                            path="start",
+                            command=StartProject()
+                        ),
+                        Route(
+                            path="delete",
+                            command=DeleteProject
+                        )
+                    ],
             ),
         ])
 
