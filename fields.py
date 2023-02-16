@@ -1,18 +1,19 @@
 from dataclasses import dataclass
 from typing import Optional
 from abc import ABC
+import math
 
 @dataclass
 class BaseField(ABC):
-    name : str
-    error_message : str
+    name : str = ""
+    error_message : str = ""
 
     def is_valid(self, value, throw_exception=True):
         pass
 
 @dataclass
 class StringField(BaseField):
-    max_length : int
+    max_length : int = math.inf
     regexp : Optional[str] = ""
 
     def is_valid(self, value, throw_exception=True):
@@ -21,3 +22,16 @@ class StringField(BaseField):
             return False
         return True
 
+@dataclass
+class NumberField(BaseField):
+    maxn : int = math.inf
+    minn: int = -math.inf
+
+    def is_valid(self, value, throw_exception=True):
+        if(value > self.maxn):
+            print("{} argument greater than max".format(self.name))
+            return False
+        if(value > self.maxn):
+            print("{} argument less than min".format(self.name))
+            return False
+        return True

@@ -18,7 +18,11 @@ class CLI():
                         child.command.run(argv[index+1:])
                         return True
                     else:
-                        current_route = child
+                        if child.command and (len(argv) - 1 == index):
+                            child.command.run(argv[index+1:])
+                            return True
+                        else:
+                            current_route = child
         self.help(current_route)
         return False
 

@@ -3,6 +3,7 @@ from typing import List
 from abc import ABC
 
 class Command(ABC):
+    name : str
     fields: List[BaseField] = []
 
     def validate(self, args):
@@ -24,5 +25,3 @@ class Command(ABC):
     @property
     def help_text(self):
         return "{} : {}".format(self.name, self.description)
-
-

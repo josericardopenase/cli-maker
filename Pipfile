@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pynvim = "*"
 jedi = "*"
+keyboard = "*"
 
 [dev-packages]
 pylint = "*"
