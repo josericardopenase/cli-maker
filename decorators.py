@@ -10,6 +10,7 @@ def command(name : str = "", description : str = ""):
             new_command.fields=fun["fields"]
             new_command.command=fun["command"]
         else:
+            new_command.fields=[]
             new_command.command=fun
         return new_command
     return decorator

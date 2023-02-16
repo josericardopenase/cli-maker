@@ -7,9 +7,13 @@ import math
 class BaseField(ABC):
     name : str = ""
     error_message : str = ""
+    description : str = ""
 
     def is_valid(self, value, throw_exception=True):
         pass
+
+    def __str__(self):
+        return self.__class__.__name__
 
 @dataclass
 class StringField(BaseField):
