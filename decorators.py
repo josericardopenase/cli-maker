@@ -2,6 +2,7 @@ from commands import Command
 from fields import BaseField
 
 def command(name : str = "", description : str = ""):
+    #FIXME: THIS IS SHITTY CODE
     def decorator(fun):
         new_command = Command()
         new_command.name=name
@@ -16,6 +17,7 @@ def command(name : str = "", description : str = ""):
     return decorator
 
 def field(field : BaseField):
+    #FIXME: THIS IS SNITTY CODE
     def decorator(fun, *args, **kargs):
         if not isinstance(fun, dict):
             return {
