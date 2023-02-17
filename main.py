@@ -10,7 +10,7 @@ class StartProject(Command):
     name = "start"
     description = "Start a new Adam project"
     fields = [
-            StringField(name="project", error_message="Not valid first arg", max_length=5, description="Name of the project"),
+            StringField(name="project", maxl=5, description="Name of the project"),
     ]
 
     def command(self, args):
@@ -18,9 +18,9 @@ class StartProject(Command):
         txt.show()
 
 @dc.command(name="delete", description="Delete new adam project")
-@dc.field(StringField(name="name", error_message="Not valid first arg", max_length=5, description="name of the project"))
-@dc.field(StringField(name="description", error_message="Not valid second arg", max_length=5, description="description of the project"))
-@dc.field(NumberField(name="number", error_message="not valid number", description="number of times"))
+@dc.field(StringField(name="name", maxl=5, description="name of the project"))
+@dc.field(StringField(name="description", maxl=5, description="description of the project"))
+@dc.field(NumberField(name="number", description="number of times"))
 def DeleteProject(args):
     txt=Text("delete project", color=Tint.OKBLUE)
     txt.show()
@@ -45,8 +45,8 @@ def main():
                             command=DeleteProject
                         )
                     ],
-            ),
-        ])
+            )]
+        )
 
     cli = CLI(router)
     cli.run()

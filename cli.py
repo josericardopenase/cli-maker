@@ -2,6 +2,7 @@ from utils.classes import get_subtypes
 from dataclasses import dataclass
 from commands import Command
 from router import Router
+from ui.colors import Tint, tint_text
 from sys import argv
 
 class CLI():
@@ -27,10 +28,19 @@ class CLI():
         return False
 
     def help(self, node):
+        help_text=""
         for x in node:
             if(x.command):
-                print(x.command.help_text)
+                help_text+=f'   {x.command.help_text}\n'
             else:
-                print('{} : {}'.format(x.path, x.help_text))
+                help_text+=f'    {tint_text(x.path, Tint.OKGREEN )} : {x.help_text}\n'
+        print(
+        f"""
+ {tint_text("Command not found", Tint.FAIL)}
+
+ Command list:
+
+{help_text}
+        """)
 
 

@@ -1,0 +1,61 @@
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+import re
+from typing import Callable
+
+class Validator(ABC):
+    error_message: str
+
+    @abstractmethod
+    def validate(self, value):
+        pass
+
+@dataclass
+class Max(Validator):
+    max : float
+
+    def __post__init__(self):
+        self.error_message=f"Value is greater than {self.max}"
+
+    def validate(self, value, transform : Callable = None):
+        if(transform):
+            return transform(value) < self.min
+        return value < self.min
+
+@dataclass
+class Min(Validator):
+    min: float
+
+    def __post__init__(self):
+        self.error_message=f"Value is less than {self.min}"
+
+    def validate(self, value, transform : Callable = None):
+        if(transform):
+            return transform(value) < self.min
+        return value < self.min
+
+class MaxStr(Max):
+    def __post__init__(self):
+        self.error_message=f"String length is greater than {self.max}"
+
+    def validate(self, value, transform : Callable):
+        super().validate(value, len)
+
+
+class MinStr(Min):
+    def __post__init__(self):
+        self.error_message=f"String length is less than {self.max}"
+
+    def validate(self, value, transform : Callable):
+        super().validate(value, len)
+
+
+@dataclass
+class Regexp(Validator):
+    regexp: str
+
+    def __post__init__(self):
+        self.error_message=f"Value does not match {self.regexp}"
+
+    def validate(self, value):
+        return re.match(self.regexp, value)
