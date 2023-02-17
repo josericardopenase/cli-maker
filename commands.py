@@ -1,25 +1,34 @@
 from ui.colors import Tint, tint_text
 from fields import BaseField
 from typing import List, Optional,Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from flags import Flag
 
 class Command:
-    name : str
-    description: Optional[str] = ""
     fields: List[BaseField]
     command : Optional[Callable] = None
+    last_multiple = False
+
+    def __init__(self, last_multiple=False):
+        self.last_multiple=last_multiple
 
     def validate(self, args):
         #FIXME: Refactor this code is fucking shit
-        if(len(args) < len(self.fields)):
-            self.usage("You have missing arguments")
-            return False
-        if(len(args) > len(self.fields)):
-            self.usage("Too much arguments")
-            return False
+        if not self.last_multiple:
+            if(len(args) < len(self.fields)):
+                self.usage("You have missing arguments")
+                return False
+            if(len(args) > len(self.fields)):
+                self.usage("Too much arguments")
+                return False
+
         for x in range(0, len(args)):
-            if not self.fields[x].is_valid(args[x], throw_exception=True):
+            #FIXME: refactor this.
+            #this is making that if last_multiple is true accept last values wihout exceed field array index
+            field_index = x
+            if self.last_multiple and x > (len(self.fields) - 1):
+                field_index = len(self.fields) - 1
+            if not self.fields[field_index].is_valid(args[x], throw_exception=True):
                 return False
         return True
 
@@ -46,7 +55,3 @@ class Command:
     def command(self, args):
         if(self.command):
             self.command(args)
-
-    @property
-    def help_text(self):
-        return "{} : {}".format(tint_text(self.name, Tint.OKGREEN), self.description)

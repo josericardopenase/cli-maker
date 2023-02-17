@@ -1,12 +1,11 @@
+from typing import Any
 from commands import Command
 from fields import BaseField
 
-def command(name : str = "", description : str = ""):
+def command(last_multiple : bool = False):
     #FIXME: THIS IS SHITTY CODE
     def decorator(fun):
-        new_command = Command()
-        new_command.name=name
-        new_command.description=description
+        new_command = Command(last_multiple=last_multiple)
         if(isinstance(fun, dict)):
             new_command.fields=fun["fields"]
             new_command.command=fun["command"]

@@ -30,10 +30,7 @@ class CLI():
     def help(self, node):
         help_text=""
         for x in node:
-            if(x.command):
-                help_text+=f'   {x.command.help_text}\n'
-            else:
-                help_text+=f'    {tint_text(x.path, Tint.OKGREEN )} : {x.help_text}\n'
+            help_text+=f'    {tint_text(x.path, Tint.OKGREEN )} : {x.help_text}\n'
         print(
         f"""
  {tint_text("Command not found", Tint.FAIL)}

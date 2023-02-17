@@ -4,7 +4,7 @@ from abc import ABC
 import math
 from typing import List 
 from ui.colors import tint_text, Tint
-from validators import Max, Min, MaxStr, MinStr, Validator
+from validators import Max, Min, MaxStr, MinStr, Regexp, Validator, IsFile, IsDirectory
 
 @dataclass
 class BaseField(ABC):
@@ -26,11 +26,27 @@ class BaseField(ABC):
 @dataclass
 class StringField(BaseField):
     maxl : int = math.inf
-    minl : int = math.inf
+    minl : int = -math.inf
     regexp : Optional[str] = ""
     
     def __post_init__(self):
-        self.validators = [MaxStr(self.maxl), MinStr(self.minl)]
+        self.validators = [MaxStr(self.maxl), MinStr(self.minl), Regexp(self.regexp)]
+
+@dataclass
+class EmailField(StringField):
+    def __post_init__(self):
+        self.validators = [Regexp('^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$')]
+
+@dataclass
+class DirectoryField(BaseField):
+    def __post_init__(self):
+        self.validators = [IsDirectory()]
+
+@dataclass
+class FileField(BaseField):
+    def __post_init__(self):
+        self.validators = [IsFile()]
+
 
 @dataclass
 class NumberField(BaseField):
