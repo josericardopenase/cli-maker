@@ -4,14 +4,6 @@ from typing import List, Optional,Callable
 from dataclasses import dataclass
 from flags import Flag
 
-"""
-{
-    flag: str,
-    short_flag : str,
-    fields : []
-}
-"""
-
 class Command:
     name : str
     description: Optional[str] = ""
