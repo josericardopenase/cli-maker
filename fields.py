@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from abc import ABC
 import math
-from typing import List
+from typing import List 
 from ui.colors import tint_text, Tint
 from validators import Max, Min, MaxStr, MinStr, Validator
 

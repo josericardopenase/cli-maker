@@ -17,14 +17,6 @@ class StartProject(Command):
         txt=Text("hello world", color=Tint.OKBLUE)
         txt.show()
 
-@dc.command(name="delete", description="Delete new adam project")
-@dc.field(StringField(name="name", maxl=5, description="name of the project"))
-@dc.field(StringField(name="description", maxl=5, description="description of the project"))
-@dc.field(NumberField(name="number", description="number of times"))
-def DeleteProject(args):
-    txt=Text("delete project", color=Tint.OKBLUE)
-    txt.show()
-
 @dc.command(name="project", description="create, destroy, list projects")
 def ListProject(args):
     print(tint_text("List projects", color=Tint.FAIL))
@@ -40,10 +32,6 @@ def main():
                             path="start",
                             command=StartProject()
                         ),
-                        Route(
-                            path="delete",
-                            command=DeleteProject
-                        )
                     ],
             )]
         )
