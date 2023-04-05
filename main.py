@@ -9,16 +9,17 @@ from ui.components import Text
 class StartProject(Command):
     fields = [
             StringField(name="project", maxl=5, description="Name of the project"),
+            EmailField(name="user_email", description="email del usuario")
     ]
 
     def command(self, args):
+        print(args)
         txt=Text("hello world", color=Tint.OKBLUE)
         txt.show()
 
 @dc.command()
 def ListProject(args):
     print(tint_text("List projects", color=Tint.FAIL))
-
 
 @dc.command()
 def holaJavs(args):
